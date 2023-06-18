@@ -28,6 +28,7 @@
         android:importantForAccessibility="no"
         android:background="@drawable/circular_ripple"
         android:padding="5dp"
+
         android:tooltipText="@string/profile"
         />
 

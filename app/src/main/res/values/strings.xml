@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">YTS</string>
     <string name="profile">Profile</string>
+    <string name="home">Home</string>
+    <string name="search">Search</string>
+    <string name="suggestions">Suggestions</string>
+    <string name="bookmarks">Bookmarks</string>
 </resources>
