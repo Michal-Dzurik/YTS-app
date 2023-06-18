@@ -1,9 +1,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.YTS" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.YTS" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <!-- Customize your light theme here. -->
         <item name="colorPrimary">@color/yts_green</item>
         <item name="colorSecondary">@color/main_background_dark</item>
+        <item name="android:textColorPrimary">@color/heading_white</item>
+        <item name="android:textColorSecondary">@color/text_grey</item>
 
         <item name="android:textColor">@color/text_grey</item>
         <item name="headingColor">@color/heading_white</item>
