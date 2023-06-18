@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/button"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:clickable="true"
+    android:focusable="true"
+    android:paddingHorizontal="7dp"
+    android:paddingVertical="5dp"
+    android:background="@drawable/circular_ripple"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:id="@+id/buttonImage"
+        android:src="@drawable/ic_person"
+        android:layout_marginBottom="-1dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:importantForAccessibility="no"
+        android:background="@color/transparent"
+        />
+
+    <TextView
+        android:id="@+id/buttonTitle"
+        android:text="@string/profile"
+        android:textSize="11sp"
+        android:textColor="@color/heading_white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        />
+
+</LinearLayout>
