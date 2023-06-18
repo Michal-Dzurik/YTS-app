@@ -1,11 +1,14 @@
 package sk.dzurikm.yts;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -17,17 +20,22 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Objects;
+
 import sk.dzurikm.yts.constants.ApiMap;
 import sk.dzurikm.yts.constants.RequestParameters;
 import sk.dzurikm.yts.constants.ResponseType;
 import sk.dzurikm.yts.constants.YtsUrlBuilder;
 
 public class MainActivity extends AppCompatActivity {
+    private ImageButton profileButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        init();
 
         String url = new YtsUrlBuilder(ResponseType.JSON)
                 .setApiRoute(ApiMap.MOVIES_LIST)
@@ -55,24 +63,19 @@ public class MainActivity extends AppCompatActivity {
         queue.add(request);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.action_bar, menu);
-        return true;
+    private void init(){
+        setActionBar();
     }
 
-    @SuppressLint("NonConstantResourceId")
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+    private void setActionBar(){
+        Objects.requireNonNull(getSupportActionBar()).setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setCustomView(R.layout.action_bar);
 
-           /* case R.id.profile:
-                //do something
-                break;
-            default:
-                break;*/
-        }
-        return super.onOptionsItemSelected(item);
+        LinearLayout actionBarView = (LinearLayout) getSupportActionBar().getCustomView();
+        profileButton = actionBarView.findViewById(R.id.profileButton);
+
+        //TODO: Login, then after click go to profile , if not then go to login page
     }
+
 }

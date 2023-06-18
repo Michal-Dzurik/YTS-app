@@ -2,10 +2,13 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="transparent">#00000000</color>
 
     <color name="yts_green">#6ac045</color>
     <color name="text_grey">#919191</color>
     <color name="heading_white">#ffffff</color>
     <color name="main_background_dark">#171717</color>
     <color name="navigation_background">#1d1d1d</color>
+
+    <color name="ripple_color">#95323232</color>
 </resources>

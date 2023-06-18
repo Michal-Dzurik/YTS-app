@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.YTS" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <!-- Customize your light theme here. -->
-        <item name="colorPrimary">@color/yts_green</item>
-        <item name="colorSecondary">@color/main_background_dark</item>
+        <item name="colorPrimary">@color/navigation_background</item>
+        <item name="colorSecondary">@color/yts_green</item>
         <item name="android:textColorPrimary">@color/heading_white</item>
         <item name="android:textColorSecondary">@color/text_grey</item>
 
@@ -12,11 +12,16 @@
 
         <item name="android:navigationBarColor">@color/main_background_dark</item>
         <item name="android:statusBarColor">@color/navigation_background</item>
-        <item name="android:background">@color/main_background_dark</item>
+        <item name="actionBarTheme">@style/Theme.YTS.ActionBarStyle</item>
+        <item name="android:actionBarSize">65dp</item>
 
         <!-- SPLASH SCREEN -->
         <item name="android:windowSplashScreenBackground" tools:targetApi="s">@color/main_background_dark</item>
         <item name="android:windowSplashScreenAnimationDuration" tools:targetApi="s">@integer/splash_duration</item>
+    </style>
+
+    <style name="Theme.YTS.ActionBarStyle" parent="Widget.AppCompat.ActionBar">
+        <!--<item name="android:background">@color/navigation_background</item>-->
     </style>
 
     <style name="Theme.YTS" parent="Base.Theme.YTS" />
