@@ -19,7 +19,7 @@
         android:layout_weight="1"
         android:textColor="@color/heading_white"/>
 
-    <ImageView
+    <ImageButton
         android:id="@+id/profileButton"
         android:src="@drawable/ic_person"
         android:layout_marginBottom="-1dp"
@@ -27,8 +27,6 @@
         android:layout_height="wrap_content"
         android:importantForAccessibility="no"
         android:background="@drawable/circular_ripple"
-        android:clickable="true"
-        android:focusable="true"
         android:padding="5dp"
         android:tooltipText="@string/profile"
         />
