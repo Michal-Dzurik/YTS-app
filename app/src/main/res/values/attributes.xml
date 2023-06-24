@@ -6,4 +6,10 @@
         <attr name="imageSrc" format="reference" />
         <attr name="title" format="string" />
     </declare-styleable>
+
+    <declare-styleable name="MovieView">
+        <attr name="movieImage" format="reference" />
+        <attr name="movieTitle" format="string" />
+        <attr name="movieYear" format="string" />
+    </declare-styleable>
 </resources>
