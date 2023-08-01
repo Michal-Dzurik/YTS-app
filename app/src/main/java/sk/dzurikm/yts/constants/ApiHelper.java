@@ -58,7 +58,7 @@ public class ApiHelper {
                 ArrayList<String> genresModels = new ArrayList<>();
 
                 for (int j = 0; j < genres.length(); j++) {
-                    genresModels.add((String) genres.get(i));
+                    genresModels.add((String) genres.get(j));
                 }
 
                 movieModel.setGenres(genresModels);
