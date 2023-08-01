@@ -77,7 +77,6 @@ public class HomeFragment extends Fragment {
                     public void onResponse(JSONObject response) {
                         if (null != response) {
                             ArrayList<Movie> movies = ApiHelper.getMovies(response);
-                            Log.d("RESPONSE",movies.toString());
                             displayFeaturedMovies(movies);
 
                         }

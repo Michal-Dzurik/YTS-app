@@ -141,6 +141,7 @@ public class MovieView extends LinearLayout {
         Glide.with(getContext().getApplicationContext())
                 .load(url)   //passing your url to load image.
                 .error(R.drawable.ic_image_error)
+                .skipMemoryCache(false)
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {

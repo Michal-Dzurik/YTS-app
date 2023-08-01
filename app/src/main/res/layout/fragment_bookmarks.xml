@@ -6,7 +6,8 @@
     tools:context=".fragments.BookmarksFragment"
     android:paddingVertical="10dp"
     android:paddingHorizontal="15dp"
-    android:tag="Bookmarks">
+    android:tag="Bookmarks"
+    android:background="@color/main_background_dark">
 
     <TextView
         android:layout_width="match_parent"

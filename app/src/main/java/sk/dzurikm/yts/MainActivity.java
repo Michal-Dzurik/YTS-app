@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 
@@ -89,10 +90,6 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_nav  );
         replaceFragment(homeFragment);
 
-        /*BadgeDrawable badgeDrawable = bottomNavigationView.getOrCreateBadge(R.id.home);
-        badgeDrawable.setVisible(true);
-        badgeDrawable.setNumber(8);*/
-
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -114,7 +111,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void replaceFragment(Fragment fragment){
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        transaction.setCustomAnimations(
+                R.anim.fragment_enter_new,
+                R.anim.fragment_exit_new,
+                R.anim.fragment_enter_old,
+                R.anim.fragment_exit_old
+        );
+        transaction.addToBackStack(fragment.getTag());
+        transaction.replace(R.id.fragment_container, fragment).commit();
     }
 
     private void setUpActionBar(){

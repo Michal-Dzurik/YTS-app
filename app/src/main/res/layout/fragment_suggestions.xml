@@ -6,7 +6,8 @@
     tools:context=".fragments.SuggestionsFragment"
     android:paddingVertical="10dp"
     android:paddingHorizontal="15dp"
-    android:tag="Suggestions">
+    android:tag="Suggestions"
+    android:background="@color/main_background_dark">
 
     <TextView
         android:layout_width="match_parent"

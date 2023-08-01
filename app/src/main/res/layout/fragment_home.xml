@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".fragments.HomeFragment"
     android:tag="Home"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/main_background_dark">
 
     <ScrollView
         android:layout_width="match_parent"
