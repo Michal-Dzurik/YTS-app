@@ -38,14 +38,13 @@
                     android:scaleType="fitCenter"
                     android:adjustViewBounds="true"
                     app:tint="@color/yts_green"
-                    android:layout_marginTop="5dp"
                     android:layout_marginRight="10dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/heading_white"
-                    android:textSize="23sp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     android:gravity="center"
                     android:layout_marginBottom="5dp"

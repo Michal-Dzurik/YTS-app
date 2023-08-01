@@ -29,4 +29,9 @@
         app:itemIconTint="@color/bottom_bar_items"
         app:itemTextColor="@color/bottom_bar_items" />
 
+    <sk.dzurikm.yts.views.LoadingView
+        android:id="@+id/loadingView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

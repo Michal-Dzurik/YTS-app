@@ -10,6 +10,6 @@
     <declare-styleable name="MovieView">
         <attr name="movieImage" format="reference" />
         <attr name="movieTitle" format="string" />
-        <attr name="movieYear" format="string" />
+        <attr name="movieYear" format="integer" />
     </declare-styleable>
 </resources>

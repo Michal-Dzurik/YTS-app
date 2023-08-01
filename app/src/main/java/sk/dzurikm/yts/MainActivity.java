@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 
 import android.os.Bundle;
@@ -23,11 +24,18 @@ import sk.dzurikm.yts.constants.YtsUrlBuilder;
 import sk.dzurikm.yts.fragments.BookmarksFragment;
 import sk.dzurikm.yts.fragments.HomeFragment;
 import sk.dzurikm.yts.fragments.SuggestionsFragment;
+import sk.dzurikm.yts.helpers.Animations;
+import sk.dzurikm.yts.helpers.Time;
+import sk.dzurikm.yts.models.callbacks.Callback;
+import sk.dzurikm.yts.models.observable.HideLoadingModel;
+import sk.dzurikm.yts.views.LoadingView;
 
 public class MainActivity extends AppCompatActivity {
     private ImageButton profileButton;
     private NavController navigationController;
     private BottomNavigationView bottomNavigationView;
+    private HideLoadingModel hideLoadingModel;
+    private LoadingView loadingView;
 
     HomeFragment homeFragment;
     SuggestionsFragment suggestionsFragment;
@@ -45,30 +53,30 @@ public class MainActivity extends AppCompatActivity {
                 .setParameters(new RequestParameters())
                 .getUrl();
 
-
-        /*RequestQueue queue = Volley.newRequestQueue(this);
-        JsonObjectRequest request = new JsonObjectRequest(url, null,
-                new Response.Listener<JSONObject>() {
+        hideLoadingModel = new ViewModelProvider(this).get(HideLoadingModel.class);
+        hideLoadingModel.getSelectedItem().observe(this, item -> {
+            if (item) {
+                Time.wait(new Callback() {
                     @Override
-                    public void onResponse(JSONObject response) {
-                        if (null != response) {
-                            Toast.makeText(MainActivity.this, "Answer:" + response.toString(), Toast.LENGTH_SHORT).show();
-                        }
+                    public Void callback() {
+                        Animations.fadeOut(loadingView);
+                        return null;
                     }
-                }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
+                });
             }
+            else Animations.fadeIn(loadingView);
         });
-        queue.add(request);*/
     }
 
     private void init(){
+        setUpViews();
         setUpFragments();
         setUpActionBar();
         setUpNavigation();
+    }
+
+    private void setUpViews() {
+        loadingView = this.findViewById(R.id.loadingView);
     }
 
     private void setUpFragments() {

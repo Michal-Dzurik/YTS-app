@@ -15,6 +15,9 @@
         <item name="actionBarTheme">@style/Theme.YTS.ActionBarStyle</item>
         <item name="android:actionBarSize">65dp</item>
 
+        <item name="android:textViewStyle">@style/HelveticaTextViewStyle</item>
+        <item name="android:buttonStyle">@style/HelveticaButtonStyle</item>
+
         <!-- SPLASH SCREEN -->
         <item name="android:windowSplashScreenBackground" tools:targetApi="s">@color/main_background_dark</item>
         <item name="android:windowSplashScreenAnimationDuration" tools:targetApi="s">@integer/splash_duration</item>
@@ -25,4 +28,12 @@
     </style>
 
     <style name="Theme.YTS" parent="Base.Theme.YTS" />
+
+    <style name="HelveticaTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/helvetica_medium</item>
+    </style>
+
+    <style name="HelveticaButtonStyle" parent="android:Widget.Holo.Button">
+        <item name="android:fontFamily">@font/helvetica_medium</item>
+    </style>
 </resources>

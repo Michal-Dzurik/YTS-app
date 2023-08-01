@@ -3,7 +3,7 @@
     android:color="@color/ripple_color">
     <item android:id="@android:id/mask">
         <shape android:shape="rectangle">
-            <corners android:radius="10dp"/>
+            <corners android:radius="2dp"/>
             <stroke
                 android:width="4dp"
                 android:color="@color/yts_green" />
@@ -13,7 +13,7 @@
     </item>
     <item>
         <shape android:shape="rectangle">
-            <corners android:radius="10dp"/>
+            <corners android:radius="2dp"/>
             <stroke
                 android:width="4dp"
                 android:color="@color/yts_green" />

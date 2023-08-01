@@ -16,7 +16,7 @@
         android:clickable="true"
         android:focusable="true"
         android:layout_weight="1"
-        app:cardCornerRadius="12dp"
+        app:cardCornerRadius="6dp"
         android:foreground="@drawable/movie_ripple"
         android:background="@drawable/movie_ripple">
 
@@ -35,7 +35,7 @@
     <TextView
         android:id="@+id/movieTitle"
         android:text="Love, Rosie"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:layout_marginTop="7dp"
         android:textStyle="bold"
         android:textColor="@color/heading_white"
@@ -47,7 +47,7 @@
     <TextView
         android:id="@+id/movieYear"
         android:text="2013"
-        android:textSize="14sp"
+        android:textSize="13sp"
         android:textColor="@color/text_grey"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

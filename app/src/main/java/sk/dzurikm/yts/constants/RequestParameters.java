@@ -11,6 +11,7 @@ public class RequestParameters {
     }
 
     public RequestParameters() {
+        parameters = new HashMap<String, String>();
     }
 
     @Override
@@ -34,5 +35,9 @@ public class RequestParameters {
         }
 
         return params.toString();
+    }
+
+    public void add(String name,String value){
+        parameters.put(name,value);
     }
 }

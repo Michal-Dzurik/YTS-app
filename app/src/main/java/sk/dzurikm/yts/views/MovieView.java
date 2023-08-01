@@ -2,7 +2,6 @@ package sk.dzurikm.yts.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -12,16 +11,10 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageRequest;
-import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.bumptech.glide.request.target.Target;
 
 import sk.dzurikm.yts.R;
@@ -35,7 +28,8 @@ public class MovieView extends LinearLayout {
     private NonScrollableGridView gridView;
 
     private int image;
-    private String title,year,imageUrl;
+    private String title,imageUrl;
+    private int year;
 
 
     public MovieView(Context context) {
@@ -47,10 +41,10 @@ public class MovieView extends LinearLayout {
         super(context);
         inflateView(context);
 
-        this.image = movie.getImage();
+        this.image = movie.getCoverImage();
         this.title = movie.getTitle();
         this.year = movie.getYear();
-        this.imageUrl = movie.getImageUrl();
+        this.imageUrl = movie.getCoverImageUrl();
 
         initViews();
         setValues();
@@ -80,7 +74,7 @@ public class MovieView extends LinearLayout {
             TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.MovieView);
             image = typedArray.getResourceId(R.styleable.MovieView_movieImage, 0);
             title = typedArray.getString(R.styleable.MovieView_movieTitle);
-            year = typedArray.getString(R.styleable.MovieView_movieYear);
+            year = typedArray.getInteger(R.styleable.MovieView_movieYear,0);
             typedArray.recycle();
         }
 
@@ -112,9 +106,10 @@ public class MovieView extends LinearLayout {
             setTitle(limitWordsOrCharCount(title,3,30));
         }
 
-        if (year != null) {
+        if (year > 1800) {
             setYear(year);
         }
+        else movieYear.setText("Undefined");
     }
 
     private String limitWordsOrCharCount(String text, int wordCount, int charCount){
@@ -170,8 +165,8 @@ public class MovieView extends LinearLayout {
         movieTitle.setText(text);
     }
 
-    public void setYear(String text) {
-        movieYear.setText(text);
+    public void setYear(int text) {
+        movieYear.setText(String.valueOf(text));
     }
 
     public void setGridView(NonScrollableGridView gridView) {
