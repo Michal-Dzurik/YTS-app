@@ -5,6 +5,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import androidx.fragment.app.FragmentManager;
+
 import java.util.List;
 
 import sk.dzurikm.yts.models.Movie;
@@ -15,11 +17,13 @@ public class MovieAdapter extends BaseAdapter {
     private Context context;
     private List<Movie> movies;
     private NonScrollableGridView gridView;
+    private FragmentManager fragmentManager;
 
-    public MovieAdapter(Context context, List<Movie> movieList, NonScrollableGridView gridView) {
+    public MovieAdapter(Context context, FragmentManager fragmentManager, List<Movie> movieList, NonScrollableGridView gridView) {
         this.context = context;
-        movies = movieList;
+        this.movies = movieList;
         this.gridView = gridView;
+        this.fragmentManager = fragmentManager;
     }
 
     @Override
@@ -46,7 +50,7 @@ public class MovieAdapter extends BaseAdapter {
 
         if (convertView == null) {
             // Create a new instance of your custom view
-            movieView = new MovieView(context,movie);
+            movieView = new MovieView(context,fragmentManager,movie);
         } else {
             // Reuse the existing view
             movieView = (MovieView) convertView;

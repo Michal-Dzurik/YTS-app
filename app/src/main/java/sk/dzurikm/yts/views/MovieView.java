@@ -1,15 +1,18 @@
 package sk.dzurikm.yts.views;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentManager;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -22,6 +25,7 @@ import sk.dzurikm.yts.models.Movie;
 import sk.dzurikm.yts.views.layouts.NonScrollableGridView;
 
 public class MovieView extends LinearLayout {
+    private Context context;
     private ImageView movieImage;
     private TextView movieTitle,movieYear;
     private OnClickListener onClickListener;
@@ -31,13 +35,17 @@ public class MovieView extends LinearLayout {
     private String title,imageUrl;
     private int year;
 
+    private MovieDetailBottomSheet movieDetailDialog;
+    private Movie movie;
+    private FragmentManager fragmentManager;
+
 
     public MovieView(Context context) {
         super(context);
         init(context, null);
     }
 
-    public MovieView(Context context, Movie movie) {
+    public MovieView(Context context, FragmentManager fragmentManager, Movie movie) {
         super(context);
         inflateView(context);
 
@@ -45,6 +53,9 @@ public class MovieView extends LinearLayout {
         this.title = movie.getTitle();
         this.year = movie.getYear();
         this.imageUrl = movie.getCoverImageUrl();
+        this.movie = movie;
+        this.fragmentManager = fragmentManager;
+        this.context = context;
 
         initViews();
         setValues();
@@ -67,6 +78,7 @@ public class MovieView extends LinearLayout {
 
     private void init(Context context, AttributeSet attrs) {
         inflateView(context);
+        this.context = context;
 
         initViews();
 
@@ -86,6 +98,35 @@ public class MovieView extends LinearLayout {
         movieTitle = findViewById(R.id.movieTitle);
         movieYear = findViewById(R.id.movieYear);
 
+        movieDetailDialog = new MovieDetailBottomSheet(context);
+
+        movieImage.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (movie != null){
+                    movieDetailDialog.setMovie(movie);
+                    movieDetailDialog.show(fragmentManager,null);
+                }
+            }
+        });
+
+        movieImage.setOnLongClickListener(new OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_TEXT, movie.getUrl());
+
+                // Title for the chooser dialog
+                String chooserTitle = "Share Link via";
+                // Create a chooser to show available sharing apps
+                Intent chooserIntent = Intent.createChooser(shareIntent, chooserTitle);
+                if (shareIntent.resolveActivity(context.getPackageManager()) != null) {
+                    context.startActivity(chooserIntent);
+                }
+                return false;
+            }
+        });
     }
 
     private void inflateView(Context context) {
@@ -103,7 +144,7 @@ public class MovieView extends LinearLayout {
         }
 
         if (title != null) {
-            setTitle(limitWordsOrCharCount(title,3,30));
+            setTitle(title);
         }
 
         if (year > 1800) {
@@ -112,30 +153,6 @@ public class MovieView extends LinearLayout {
         else movieYear.setText("Undefined");
     }
 
-    private String limitWordsOrCharCount(String text, int wordCount, int charCount){
-        String[] words = text.trim().split(" ");
-        StringBuilder newText = new StringBuilder();
-
-        if (wordCount > words.length) return text;
-
-        for (int i = 0; i < wordCount; i++) {
-            newText.append(" ").append(words[i]);
-        }
-
-        if (newText.length() > charCount){
-
-            if (words.length > 1){
-                newText = new StringBuilder();
-                for (int i = 0; i < wordCount - 1; i++) {
-                    newText.append(" ").append(words[i]);
-                }
-            }
-
-            else return text;
-        }
-
-        return newText.append("…").toString().trim();
-    }
 
     private void loadImage(String url,ImageView imageView){
         Glide.with(getContext().getApplicationContext())

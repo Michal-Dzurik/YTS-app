@@ -33,7 +33,10 @@ public class ApiHelper {
                         movie.getString("slug"),
                         movie.getString("description_full"),
                         movie.getString("language"),
-                        movie.getDouble("rating")
+                        movie.getDouble("rating"),
+                        movie.getInt("runtime"),
+                        movie.getString("url"),
+                        movie.getString("yt_trailer_code")
                 );
 
                 JSONArray torrents = movie.getJSONArray("torrents");

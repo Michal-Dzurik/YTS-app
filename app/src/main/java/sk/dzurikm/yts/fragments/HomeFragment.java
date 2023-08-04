@@ -93,7 +93,7 @@ public class HomeFragment extends Fragment {
 
 
     private void displayFeaturedMovies(ArrayList<Movie> movies){
-        gridView.setAdapter(new MovieAdapter(context,movies,gridView));
+        gridView.setAdapter(new MovieAdapter(context,getParentFragmentManager(),movies,gridView));
         hideLoadingModel.selectItem(true);
     }
 }

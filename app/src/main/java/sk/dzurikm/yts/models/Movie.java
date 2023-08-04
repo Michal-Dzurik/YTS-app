@@ -6,13 +6,13 @@ import java.util.ArrayList;
 
 public class Movie {
     private Long id;
-    private int coverImage,year;
-    private String title, coverImageUrl, slug, description, language;
+    private int coverImage,year,duration;
+    private String title, coverImageUrl, slug, description, language, url,ytTrailerCode;
     private double rating;
     private ArrayList<String> genres;
     private ArrayList<Torrent> torrents;
 
-    public Movie(Long id, int year, String title, String coverImageUrl, String slug, String description, String language, double rating) {
+    public Movie(Long id, int year, String title, String coverImageUrl, String slug, String description, String language, double rating, int duration, String url, String ytTrailerCode) {
         this.id = id;
         this.year = year;
         this.title = title;
@@ -21,6 +21,9 @@ public class Movie {
         this.description = description;
         this.language = language;
         this.rating = rating;
+        this.duration = duration;
+        this.url = url;
+        this.ytTrailerCode = ytTrailerCode;
     }
 
     public Movie(@DrawableRes int image, String title, int year) {
@@ -71,6 +74,16 @@ public class Movie {
 
     public String getCoverImageUrl() {
         return coverImageUrl;
+    }
+
+    public String getGenresInString(){
+        String output = "";
+        for (int i = 0; i < genres.size(); i++) {
+            if (i == 0) output += genres.get(i);
+            else output += ", " + genres.get(i);
+        }
+
+        return output;
     }
 
     public void setCoverImageUrl(String coverImageUrl) {
@@ -125,17 +138,48 @@ public class Movie {
         this.genres = genres;
     }
 
+    public int getDuration() {
+        return duration;
+    }
+
+    public String getFormattedDuration() {
+        return ((int) duration / 60) + "h " + (duration % 60 != 0 ? duration % 60 + "min" : "");
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getTrailerUrl() {
+        return "https://www.youtube.com/watch?v=" + ytTrailerCode;
+    }
+
+    public void setYtTrailerCode(String ytTrailerCode) {
+        this.ytTrailerCode = ytTrailerCode;
+    }
+
     @Override
     public String toString() {
         return "Movie{" +
                 "id=" + id +
                 ", coverImage=" + coverImage +
                 ", year=" + year +
+                ", duration=" + duration +
                 ", title='" + title + '\'' +
                 ", coverImageUrl='" + coverImageUrl + '\'' +
                 ", slug='" + slug + '\'' +
                 ", description='" + description + '\'' +
                 ", language='" + language + '\'' +
+                ", url='" + url + '\'' +
+                ", trailerUrl='" + getTrailerUrl() + '\'' +
                 ", rating=" + rating +
                 ", genres=" + genres +
                 ", torrents=" + torrents +

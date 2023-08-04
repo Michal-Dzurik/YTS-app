@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:clipToPadding="false"
+    android:background="@color/navigation_background"
+    android:paddingVertical="10dp"
+    android:paddingHorizontal="15dp">
+
+        <TextView
+            android:id="@+id/movieGenres"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:paddingHorizontal="5dp"
+            android:text="Julia Roberts"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="-5dp"
+            android:textColor="@color/text_grey"/>
+
+        <TextView
+            android:id="@+id/movieHeading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            android:paddingHorizontal="5dp"
+            android:paddingVertical="7dp"
+            android:text="It was always you"
+
+
+            android:textColor="@color/heading_white"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/youtubeTrailer"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        app:cardCornerRadius="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_gravity="center"
+        android:focusable="true"
+        android:clickable="true"
+        app:cardBackgroundColor="@color/main_background_dark">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_youtube" />
+
+    </androidx.cardview.widget.CardView>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="5dp"
+            android:paddingVertical="5dp"
+            android:paddingHorizontal="5dp">
+            
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_star"
+                android:tint="@color/white"
+                tools:ignore="UseAppTint" />
+            
+            <TextView
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:text="Rating"/>
+
+            <TextView
+                android:textColor="@color/white"
+                android:id="@+id/movieRating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAlignment="textEnd"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:text="7/7"
+                android:layout_marginRight="10dp"/>
+            
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="5dp"
+            android:paddingVertical="5dp"
+            android:paddingHorizontal="5dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_calendar"
+                android:tint="@color/white"
+                tools:ignore="UseAppTint" />
+
+            <TextView
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:text="Year"/>
+
+            <TextView
+                android:textColor="@color/white"
+                android:id="@+id/movieYear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAlignment="textEnd"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:text="1990"
+                android:layout_marginRight="10dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="5dp"
+            android:paddingVertical="5dp"
+            android:paddingHorizontal="5dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_timer"
+                android:tint="@color/white"
+                tools:ignore="UseAppTint" />
+
+            <TextView
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:text="Duration"/>
+
+            <TextView
+                android:textColor="@color/white"
+                android:id="@+id/movieDuration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAlignment="textEnd"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:text="1h 20min"
+                android:layout_marginRight="10dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
+            android:paddingVertical="5dp"
+            android:paddingHorizontal="5dp">
+
+            <TextView
+                android:id="@+id/movieDescription"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:textSize="14sp"
+                android:lineSpacingExtra="4sp"
+                android:text="lorem ipsum" />
+
+            <ImageButton
+                android:id="@+id/seeMoreButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_down"
+                android:padding="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@null"/>
+
+        </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/torrentRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:layout_marginLeft="-15dp"
+        android:layout_marginRight="-15dp"
+        android:orientation="horizontal"/>
+
+    </LinearLayout>
