@@ -5,4 +5,5 @@
     <string name="search">Search</string>
     <string name="suggestions">Suggestions</string>
     <string name="bookmarks">Bookmarks</string>
+    <string name="minimu_search_term_message">Search term must be longer that 3 characters</string>
 </resources>

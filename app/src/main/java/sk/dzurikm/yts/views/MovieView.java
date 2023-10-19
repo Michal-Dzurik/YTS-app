@@ -157,7 +157,7 @@ public class MovieView extends LinearLayout {
     private void loadImage(String url,ImageView imageView){
         Glide.with(getContext().getApplicationContext())
                 .load(url)   //passing your url to load image.
-                .error(R.drawable.ic_image_error)
+                .error(R.drawable.no_image)
                 .skipMemoryCache(false)
                 .listener(new RequestListener<Drawable>() {
                     @Override
@@ -168,7 +168,7 @@ public class MovieView extends LinearLayout {
 
                     @Override
                     public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                        gridView.reloadMeasurements();
+                        if (gridView != null) gridView.reloadMeasurements();
                         return false;
                     }
                 })

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.GridView;
+import android.widget.ListAdapter;
 
 public class NonScrollableGridView extends GridView {
 
@@ -76,5 +77,17 @@ public class NonScrollableGridView extends GridView {
         }
 
         setMeasuredDimension(widthMeasureSpec,heightSpec);
+    }
+
+    @Override
+    protected void handleDataChanged() {
+        super.handleDataChanged();
+
+        if (super.getAdapter().getCount() == 0){
+            // Set that no items are in grid view
+        }
+        else{
+            // Remove no items in grid view
+        }
     }
 }

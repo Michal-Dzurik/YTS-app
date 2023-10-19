@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ImageButton;
@@ -103,6 +104,11 @@ public class MainActivity extends AppCompatActivity {
                 } else if (itemId == R.id.bookmarks) {
                     replaceFragment(bookmarksFragment);
                     return true;
+                }
+                else if (itemId == R.id.search) {
+                    Intent searchActivity = new Intent(MainActivity.this,SearchActivity.class);
+                    startActivity(searchActivity);
+                    return false;
                 }
 
                 return false;

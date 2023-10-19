@@ -20,6 +20,9 @@ public class ApiHelper {
             ArrayList<Movie> movieModels = new ArrayList<>();
 
             JSONObject data = response.getJSONObject("data");
+
+            if (data.getInt("movie_count") == 0) return null;
+
             JSONArray movies = data.getJSONArray("movies");
 
             for (int i = 0; i < movies.length(); i++) {

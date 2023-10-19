@@ -3,12 +3,17 @@ package sk.dzurikm.yts.adapters;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
 
 import androidx.fragment.app.FragmentManager;
 
 import java.util.List;
 
+import sk.dzurikm.yts.R;
+import sk.dzurikm.yts.helpers.Animations;
 import sk.dzurikm.yts.models.Movie;
 import sk.dzurikm.yts.views.MovieView;
 import sk.dzurikm.yts.views.layouts.NonScrollableGridView;
@@ -16,13 +21,20 @@ import sk.dzurikm.yts.views.layouts.NonScrollableGridView;
 public class MovieAdapter extends BaseAdapter {
     private Context context;
     private List<Movie> movies;
-    private NonScrollableGridView gridView;
+    private NonScrollableGridView nonScrollableGridView;
+    private GridView gridView;
     private FragmentManager fragmentManager;
 
-    public MovieAdapter(Context context, FragmentManager fragmentManager, List<Movie> movieList, NonScrollableGridView gridView) {
+    public MovieAdapter(Context context, FragmentManager fragmentManager, List<Movie> movieList, NonScrollableGridView nonScrollableGridView) {
         this.context = context;
         this.movies = movieList;
-        this.gridView = gridView;
+        this.nonScrollableGridView = nonScrollableGridView;
+        this.fragmentManager = fragmentManager;
+    }
+
+    public MovieAdapter(Context context, FragmentManager fragmentManager, List<Movie> movieList) {
+        this.context = context;
+        this.movies = movieList;
         this.fragmentManager = fragmentManager;
     }
 
@@ -51,12 +63,13 @@ public class MovieAdapter extends BaseAdapter {
         if (convertView == null) {
             // Create a new instance of your custom view
             movieView = new MovieView(context,fragmentManager,movie);
+            Animations.fadeIn(movieView);
         } else {
             // Reuse the existing view
             movieView = (MovieView) convertView;
         }
 
-        movieView.setGridView(gridView);
+        if (nonScrollableGridView != null) movieView.setGridView(nonScrollableGridView);
 
         return movieView;
     }
