@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -12,6 +13,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -32,16 +34,22 @@ import sk.dzurikm.yts.constants.ResponseType;
 import sk.dzurikm.yts.constants.YtsUrlBuilder;
 import sk.dzurikm.yts.helpers.Animations;
 import sk.dzurikm.yts.helpers.Time;
+import sk.dzurikm.yts.models.FilterBundle;
 import sk.dzurikm.yts.models.Movie;
 import sk.dzurikm.yts.models.callbacks.Callback;
 import sk.dzurikm.yts.models.observable.HideLoadingModel;
 import sk.dzurikm.yts.views.LoadingView;
+import sk.dzurikm.yts.views.dialogs.FilterDialog;
 
 public class SearchActivity extends AppCompatActivity {
     GridView foundMoviesGridView;
     EditText searchTerm;
     HideLoadingModel hideLoadingModel;
     LoadingView loadingView;
+    ImageButton filterButton;
+
+    FilterDialog filterDialog;
+    FilterBundle filtersToApply;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +89,8 @@ public class SearchActivity extends AppCompatActivity {
     private void setUpViews() {
         foundMoviesGridView = findViewById(R.id.foundMoviesGridView);
         searchTerm = findViewById(R.id.searchTerm);
-        loadingView = this.findViewById(R.id.loadingView);
+        loadingView = findViewById(R.id.loadingView);
+        filterButton = findViewById(R.id.filterButton);
 
         hideLoadingModel = new ViewModelProvider(this).get(HideLoadingModel.class);
         hideLoadingModel.selectItem(true);
@@ -120,6 +129,13 @@ public class SearchActivity extends AppCompatActivity {
                 }
 
                 return false;
+            }
+        });
+
+        filterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showFilterDialog();
             }
         });
     }
@@ -166,4 +182,34 @@ public class SearchActivity extends AppCompatActivity {
         foundMoviesGridView.setAdapter(new MovieAdapter(SearchActivity.this,getSupportFragmentManager(),movies));
         hideLoadingModel.selectItem(true);
     }
+
+    private void showFilterDialog(){
+        if (filtersToApply == null){
+            filtersToApply = new FilterBundle();
+        }
+        if(filterDialog == null){
+            filterDialog = new FilterDialog(SearchActivity.this, SearchActivity.this.getSupportFragmentManager(), filtersToApply, new FilterDialog.OnDialogDismissListener() {
+                @Override
+                public void onDismiss(FilterBundle filterBundle) {
+                    filtersToApply = filterBundle;
+                    applyFilters();
+                }
+            });
+        }
+        filterDialog.show(SearchActivity.this.getSupportFragmentManager(),"FilterDialog");
+
+    }
+
+    private void applyFilters(){
+        if (filtersToApply.getCountOfUsedFilters() > 1){
+            ColorStateList colorStateList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.yts_green));
+            filterButton.setImageTintList(colorStateList);
+        }
+        else {
+            ColorStateList colorStateList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.white));
+            filterButton.setImageTintList(colorStateList);
+        }
+        // TODO: Apply filters
+    }
+
 }

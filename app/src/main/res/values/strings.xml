@@ -6,4 +6,8 @@
     <string name="suggestions">Suggestions</string>
     <string name="bookmarks">Bookmarks</string>
     <string name="minimu_search_term_message">Search term must be longer that 3 characters</string>
+    <string name="category_genre">Genre:</string>
+    <string name="category_quality">Quality:</string>
+    <string name="category_rating">Rating:</string>
+    <string name="category_order_by">Order by:</string>
 </resources>
