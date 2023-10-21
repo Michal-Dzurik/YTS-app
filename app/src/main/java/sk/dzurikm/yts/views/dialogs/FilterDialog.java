@@ -30,7 +30,7 @@ public class FilterDialog extends BottomSheetDialogFragment {
     private Context context;
     private FragmentManager fragmentManager;
     private SpinnerView qualitySpinner,genreSpinner,ratingSpinner,orderBySpinner;
-    private Button applyButton;
+    private Button applyButton,clearFiltersButton;
     private OnDialogDismissListener onDialogDismissListener;
     private FilterBundle filters;
     public FilterDialog(Context context, FragmentManager fragmentManager,FilterBundle filters,OnDialogDismissListener onDialogDismissListener) {
@@ -72,12 +72,24 @@ public class FilterDialog extends BottomSheetDialogFragment {
         orderBySpinner = rootView.findViewById(R.id.orderSpinner);
 
         applyButton = rootView.findViewById(R.id.applyFiltersButton);
+        clearFiltersButton = rootView.findViewById(R.id.clearFilters);
+
+        if (filters.getCountOfUsedFilters() == 0) clearFiltersButton.setVisibility(View.GONE);
     }
 
     private void setUpEvents() {
         applyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                saveFilters();
+                dismiss();
+            }
+        });
+
+        clearFiltersButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                filters.clearFilters();
                 dismiss();
             }
         });
@@ -98,12 +110,15 @@ public class FilterDialog extends BottomSheetDialogFragment {
         }
     }
 
-    @Override
-    public void onDismiss(@NonNull DialogInterface dialog) {
+    private void saveFilters(){
         filters.quality = qualitySpinner.getSpinnerValue();
         filters.genre = genreSpinner.getSpinnerValue();
         filters.rating = ratingSpinner.getSpinnerValue();
         filters.orderBy = orderBySpinner.getSpinnerValue();
+    }
+
+    @Override
+    public void onDismiss(@NonNull DialogInterface dialog) {
 
         onDialogDismissListener.onDismiss(filters);
         super.onDismiss(dialog);

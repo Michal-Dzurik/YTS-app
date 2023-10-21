@@ -10,4 +10,6 @@
     <string name="category_quality">Quality:</string>
     <string name="category_rating">Rating:</string>
     <string name="category_order_by">Order by:</string>
+    <string name="apply_filters">Apply filters</string>
+    <string name="clear_filters">Clear filters</string>
 </resources>

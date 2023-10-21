@@ -145,6 +145,9 @@ public class SearchActivity extends AppCompatActivity {
 
         featuredMoviesParameters.add("limit","20");
         featuredMoviesParameters.add("query_term",movie.trim());
+        if(filtersToApply != null){
+            filtersToApply.applyFilters(featuredMoviesParameters);
+        }
 
         String featuredMoviesUrl = new YtsUrlBuilder(ResponseType.JSON, ApiMap.MOVIES_LIST)
                 .setParameters(featuredMoviesParameters)
@@ -201,7 +204,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void applyFilters(){
-        if (filtersToApply.getCountOfUsedFilters() > 1){
+        if (filtersToApply.getCountOfUsedFilters() != 0){
             ColorStateList colorStateList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.yts_green));
             filterButton.setImageTintList(colorStateList);
         }
