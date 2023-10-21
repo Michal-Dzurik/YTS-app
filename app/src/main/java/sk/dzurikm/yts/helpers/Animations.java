@@ -12,6 +12,7 @@ public class Animations {
     }
 
     public static void fadeOut(View view, int duration){
+        view.setAlpha(1f);
         view.animate()
                 .alpha(0.0f)
                 .setDuration(duration)
@@ -33,6 +34,13 @@ public class Animations {
         view.setVisibility(View.VISIBLE);
         view.animate()
                 .alpha(1.0f)
-                .setDuration(duration);
+                .setDuration(duration)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        view.setAlpha(1f);
+                    }
+                });;
     }
 }

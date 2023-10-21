@@ -74,12 +74,28 @@
 
         </GridView>
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/emptySearch"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:visibility="gone">
 
-    <sk.dzurikm.yts.views.LoadingView
-        android:id="@+id/loadingView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/ic_movie"
+                app:tint="@color/text_grey" />
+
+            <TextView
+                android:textFontWeight="600"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_results_found"/>
+        </LinearLayout>
+
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

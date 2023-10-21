@@ -14,6 +14,8 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -44,9 +46,8 @@ import sk.dzurikm.yts.views.dialogs.FilterDialog;
 public class SearchActivity extends AppCompatActivity {
     GridView foundMoviesGridView;
     EditText searchTerm;
-    HideLoadingModel hideLoadingModel;
-    LoadingView loadingView;
     ImageButton filterButton;
+    LinearLayout emptySearch;
 
     FilterDialog filterDialog;
     FilterBundle filtersToApply;
@@ -89,23 +90,9 @@ public class SearchActivity extends AppCompatActivity {
     private void setUpViews() {
         foundMoviesGridView = findViewById(R.id.foundMoviesGridView);
         searchTerm = findViewById(R.id.searchTerm);
-        loadingView = findViewById(R.id.loadingView);
         filterButton = findViewById(R.id.filterButton);
 
-        hideLoadingModel = new ViewModelProvider(this).get(HideLoadingModel.class);
-        hideLoadingModel.selectItem(true);
-        hideLoadingModel.getSelectedItem().observe(this, item -> {
-            if (item) {
-                Time.wait(new Callback() {
-                    @Override
-                    public Void callback() {
-                        Animations.fadeOut(loadingView);
-                        return null;
-                    }
-                });
-            }
-            else Animations.fadeIn(loadingView);
-        });
+        emptySearch = findViewById(R.id.emptySearch);
 
         foundMoviesGridView.setVerticalScrollBarEnabled(false);
     }
@@ -155,7 +142,6 @@ public class SearchActivity extends AppCompatActivity {
 
         Log.d("REQUEST URL",featuredMoviesUrl);
 
-        hideLoadingModel.selectItem(false);
 
         RequestQueue queue = Volley.newRequestQueue(SearchActivity.this);
         JsonObjectRequest request = new JsonObjectRequest(featuredMoviesUrl, null,
@@ -182,8 +168,16 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void displayMovies(ArrayList<Movie> movies){
-        foundMoviesGridView.setAdapter(new MovieAdapter(SearchActivity.this,getSupportFragmentManager(),movies));
-        hideLoadingModel.selectItem(true);
+        if (movies.size() == 0){
+            Animations.fadeIn(emptySearch);
+            foundMoviesGridView.setVisibility(View.GONE);
+        }
+        else{
+            Animations.fadeOut(emptySearch);
+            foundMoviesGridView.setVisibility(View.VISIBLE);
+            foundMoviesGridView.setAdapter(new MovieAdapter(SearchActivity.this,getSupportFragmentManager(),movies));
+        }
+
     }
 
     private void showFilterDialog(){
