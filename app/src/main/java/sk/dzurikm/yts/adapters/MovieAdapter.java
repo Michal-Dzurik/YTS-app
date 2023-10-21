@@ -3,8 +3,6 @@ package sk.dzurikm.yts.adapters;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 
@@ -12,7 +10,6 @@ import androidx.fragment.app.FragmentManager;
 
 import java.util.List;
 
-import sk.dzurikm.yts.R;
 import sk.dzurikm.yts.helpers.Animations;
 import sk.dzurikm.yts.models.Movie;
 import sk.dzurikm.yts.views.MovieView;

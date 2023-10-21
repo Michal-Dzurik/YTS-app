@@ -5,7 +5,6 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.GridView;
-import android.widget.ListAdapter;
 
 public class NonScrollableGridView extends GridView {
 

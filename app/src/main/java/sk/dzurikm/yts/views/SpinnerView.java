@@ -1,7 +1,6 @@
 package sk.dzurikm.yts.views;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,14 +9,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 
-import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
 
 import sk.dzurikm.yts.R;
 import sk.dzurikm.yts.constants.Filters;
-import sk.dzurikm.yts.models.Torrent;
 
 public class SpinnerView extends LinearLayout {
     private Context context;
