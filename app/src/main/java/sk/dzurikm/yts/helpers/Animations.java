@@ -8,10 +8,14 @@ public class Animations {
     private static final int DEFAULT_ANIMATION_DURATION = 500;
 
     public static void fadeOut(View view){
-        fadeOut(view,DEFAULT_ANIMATION_DURATION);
+        fadeOut(view,DEFAULT_ANIMATION_DURATION,true);
     }
 
-    public static void fadeOut(View view, int duration){
+    public static void fadeOut(View view,boolean isEffectPresentAfter){
+        fadeOut(view,DEFAULT_ANIMATION_DURATION,isEffectPresentAfter);
+    }
+
+    public static void fadeOut(View view, int duration, boolean isEffectPresentAfter){
         view.setAlpha(1f);
         view.animate()
                 .alpha(0.0f)
@@ -20,16 +24,21 @@ public class Animations {
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         super.onAnimationEnd(animation);
-                        view.setVisibility(View.GONE);
+                        if (isEffectPresentAfter) view.setVisibility(View.GONE);
                     }
                 });
     }
 
+
     public static void fadeIn(View view){
-        fadeIn(view,DEFAULT_ANIMATION_DURATION);
+        fadeIn(view,DEFAULT_ANIMATION_DURATION,true);
     }
 
-    public static void fadeIn(View view, int duration){
+    public static void fadeIn(View view,boolean isEffectPresentAfter){
+        fadeIn(view,DEFAULT_ANIMATION_DURATION,isEffectPresentAfter);
+    }
+
+    public static void fadeIn(View view, int duration, boolean isEffectPresentAfter){
         view.setAlpha(0f);
         view.setVisibility(View.VISIBLE);
         view.animate()
@@ -39,7 +48,8 @@ public class Animations {
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         super.onAnimationEnd(animation);
-                        view.setAlpha(1f);
+
+                        if (isEffectPresentAfter) view.setAlpha(1f);
                     }
                 });;
     }

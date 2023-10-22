@@ -2,7 +2,7 @@ package sk.dzurikm.yts;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.res.ColorStateList;
 import android.os.Bundle;
@@ -14,7 +14,6 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -29,6 +28,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import sk.dzurikm.yts.adapters.MovieAdapter;
+import sk.dzurikm.yts.adapters.PaginationAdapter;
 import sk.dzurikm.yts.constants.ApiHelper;
 import sk.dzurikm.yts.constants.ApiMap;
 import sk.dzurikm.yts.constants.RequestParameters;
@@ -38,19 +38,23 @@ import sk.dzurikm.yts.helpers.Animations;
 import sk.dzurikm.yts.helpers.Time;
 import sk.dzurikm.yts.models.FilterBundle;
 import sk.dzurikm.yts.models.Movie;
+import sk.dzurikm.yts.models.Pagination;
 import sk.dzurikm.yts.models.callbacks.Callback;
-import sk.dzurikm.yts.models.observable.HideLoadingModel;
-import sk.dzurikm.yts.views.LoadingView;
+import sk.dzurikm.yts.views.PaginationView;
 import sk.dzurikm.yts.views.dialogs.FilterDialog;
 
 public class SearchActivity extends AppCompatActivity {
     GridView foundMoviesGridView;
+    PaginationView paginationView;
     EditText searchTerm;
     ImageButton filterButton;
     LinearLayout emptySearch;
 
     FilterDialog filterDialog;
     FilterBundle filtersToApply;
+    Pagination pagination;
+
+    boolean firstSearch,wasLastSearchSuccessful;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +64,9 @@ public class SearchActivity extends AppCompatActivity {
     }
     
     private void init(){
+        firstSearch = true;
+        wasLastSearchSuccessful = false;
+
         hideActionBar();
         changeStatusBarColor();
         setUpViews();
@@ -89,6 +96,8 @@ public class SearchActivity extends AppCompatActivity {
 
     private void setUpViews() {
         foundMoviesGridView = findViewById(R.id.foundMoviesGridView);
+        paginationView = findViewById(R.id.paginationNumbers);
+
         searchTerm = findViewById(R.id.searchTerm);
         filterButton = findViewById(R.id.filterButton);
 
@@ -125,30 +134,29 @@ public class SearchActivity extends AppCompatActivity {
                 showFilterDialog();
             }
         });
+
+        paginationView.setOnPageChangeListener(new PaginationView.OnPageChangeListener() {
+            @Override
+            public void onPageChange(Pagination newPagination) {
+                pagination = newPagination;
+                searchForMovies(searchTerm.getText().toString());
+            }
+        });
     }
 
     private void searchForMovies(String movie){
-        RequestParameters featuredMoviesParameters = new RequestParameters();
+        String requestURL = getRequestURL(movie);
 
-        featuredMoviesParameters.add("limit","20");
-        featuredMoviesParameters.add("query_term",movie.trim());
-        if(filtersToApply != null){
-            filtersToApply.applyFilters(featuredMoviesParameters);
-        }
-
-        String featuredMoviesUrl = new YtsUrlBuilder(ResponseType.JSON, ApiMap.MOVIES_LIST)
-                .setParameters(featuredMoviesParameters)
-                .getUrl();
-
-        Log.d("REQUEST URL",featuredMoviesUrl);
-
+        Log.d("REQUEST URL",requestURL);
 
         RequestQueue queue = Volley.newRequestQueue(SearchActivity.this);
-        JsonObjectRequest request = new JsonObjectRequest(featuredMoviesUrl, null,
+        JsonObjectRequest request = new JsonObjectRequest(requestURL, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         if (null != response) {
+                            Log.d("RESPOS",response.toString());
+                            pagination = Pagination.create(response);
                             ArrayList<Movie> movies = ApiHelper.getMovies(response);
                             if (movies != null){
                                 displayMovies(movies);
@@ -167,17 +175,96 @@ public class SearchActivity extends AppCompatActivity {
         queue.add(request);
     }
 
-    private void displayMovies(ArrayList<Movie> movies){
-        if (movies.size() == 0){
-            Animations.fadeIn(emptySearch);
-            foundMoviesGridView.setVisibility(View.GONE);
+    private String getRequestURL(String searchTerm){
+        RequestParameters featuredMoviesParameters = new RequestParameters();
+
+        featuredMoviesParameters.add("limit","20");
+        featuredMoviesParameters.add("query_term",searchTerm.trim());
+        if(filtersToApply != null){
+            filtersToApply.applyFilters(featuredMoviesParameters);
         }
-        else{
-            Animations.fadeOut(emptySearch);
-            foundMoviesGridView.setVisibility(View.VISIBLE);
-            foundMoviesGridView.setAdapter(new MovieAdapter(SearchActivity.this,getSupportFragmentManager(),movies));
+        if (pagination != null){
+            featuredMoviesParameters.add("page", String.valueOf(pagination.pageNumber));
         }
 
+        return new YtsUrlBuilder(ResponseType.JSON, ApiMap.MOVIES_LIST)
+                .setParameters(featuredMoviesParameters)
+                .getUrl();
+    }
+
+    private void displayMovies(ArrayList<Movie> movies){
+        boolean wasRequestSuccessful = movies.size() != 0;
+        if (!wasRequestSuccessful){
+            Time.wait(new Callback() {
+                @Override
+                public Object callback() {
+                    Animations.fadeIn(emptySearch);;
+
+                    return null;
+                }
+            },Time.DEFAULT_TIME_DURATION);
+
+            // Pagination update
+            Animations.fadeOut(paginationView);
+            Animations.fadeOut(foundMoviesGridView);
+        }
+        else{
+            if (wasLastSearchSuccessful){
+                Animations.fadeOut(foundMoviesGridView,false);
+                Animations.fadeOut(paginationView,false);
+
+                Time.wait(new Callback() {
+                    @Override
+                    public Object callback() {
+                        foundMoviesGridView.setAdapter(new MovieAdapter(SearchActivity.this,getSupportFragmentManager(),movies));
+                        Animations.fadeIn(foundMoviesGridView);
+
+                        // Pagination update
+                        Animations.fadeIn(paginationView);
+                        return null;
+                    }
+                },Time.DEFAULT_TIME_DURATION);
+            }
+            else if (!firstSearch){
+                Animations.fadeOut(emptySearch);
+
+                foundMoviesGridView.setAdapter(new MovieAdapter(SearchActivity.this,getSupportFragmentManager(),movies));
+
+                Time.wait(new Callback() {
+                    @Override
+                    public Object callback() {
+                        Animations.fadeIn(foundMoviesGridView);
+
+                        // Pagination update
+                        Animations.fadeIn(paginationView);
+                        return null;
+                    }
+                },Time.DEFAULT_TIME_DURATION);
+            }
+            else {
+                foundMoviesGridView.setAdapter(new MovieAdapter(SearchActivity.this,getSupportFragmentManager(),movies));
+
+                Animations.fadeIn(foundMoviesGridView);
+
+                // Pagination update
+                Animations.fadeIn(paginationView);
+
+                firstSearch = false;
+            }
+
+
+        }
+
+        wasLastSearchSuccessful = wasRequestSuccessful;
+
+        updatePagination();
+
+    }
+
+    private void updatePagination(){
+        if (pagination.resultsCount != 0) {
+            paginationView.setData(pagination);
+        }
     }
 
     private void showFilterDialog(){
@@ -206,7 +293,10 @@ public class SearchActivity extends AppCompatActivity {
             ColorStateList colorStateList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.white));
             filterButton.setImageTintList(colorStateList);
         }
-        // TODO: Apply filters
+
+        if (foundMoviesGridView.getAdapter().getCount() != 0){
+            searchForMovies(searchTerm.getText().toString());
+        }
     }
 
 }

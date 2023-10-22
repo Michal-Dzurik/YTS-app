@@ -104,7 +104,7 @@ public class TorrentAdapter extends RecyclerView.Adapter<TorrentAdapter.ViewHold
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            torrentName = itemView.findViewById(R.id.torrentName);
+            torrentName = itemView.findViewById(R.id.number);
             torrentSize = itemView.findViewById(R.id.torrentSize);
         }
     }

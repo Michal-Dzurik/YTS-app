@@ -27,7 +27,7 @@
             android:gravity="center"
             android:orientation="horizontal"
             android:paddingHorizontal="12dp"
-            android:paddingVertical="10dp">
+            >
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -42,8 +42,9 @@
                 android:layout_weight="1"
                 android:background="@null"
                 android:hint="Search"
+
                 android:maxLines="1"
-                android:paddingVertical="5dp"
+                android:paddingVertical="12dp"
                 android:singleLine="true"
                 android:textColor="@color/white"
                 android:textColorHint="@color/text_grey"
@@ -63,6 +64,12 @@
 
         </LinearLayout>
 
+        <sk.dzurikm.yts.views.PaginationView
+            android:id="@+id/paginationNumbers"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="wrap_content"/>
+
         <GridView
             android:id="@+id/foundMoviesGridView"
             android:layout_width="match_parent"
@@ -70,9 +77,21 @@
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="10dp"
             android:horizontalSpacing="20dp"
-            android:numColumns="2">
+            android:layout_weight="1"
+            android:numColumns="2"
+            android:visibility="gone">
 
         </GridView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/search_ripple"
+            android:gravity="center">
+
+
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/emptySearch"

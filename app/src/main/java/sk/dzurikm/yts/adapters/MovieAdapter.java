@@ -60,7 +60,6 @@ public class MovieAdapter extends BaseAdapter {
         if (convertView == null) {
             // Create a new instance of your custom view
             movieView = new MovieView(context,fragmentManager,movie);
-            Animations.fadeIn(movieView);
         } else {
             // Reuse the existing view
             movieView = (MovieView) convertView;

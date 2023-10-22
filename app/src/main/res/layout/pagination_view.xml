@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="10dp"
+    android:gravity="center"
+    android:paddingVertical="5dp">
+
+    <ImageButton
+        android:background="@drawable/page_button_background"
+        android:id="@+id/pageBefore"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:padding="5dp"
+        android:gravity="center"
+        android:text="1"
+        android:src="@drawable/ic_arrow_left"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:id="@+id/middleText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textAlignment="center"
+        android:text="Pages"/>
+
+    <ImageButton
+        android:background="@drawable/page_button_background"
+        android:id="@+id/pageAfter"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:padding="5dp"
+        android:gravity="center"
+        android:text="1"
+        android:src="@drawable/ic_arrow_right"
+        android:textColor="@color/white" />
+
+</LinearLayout>
+

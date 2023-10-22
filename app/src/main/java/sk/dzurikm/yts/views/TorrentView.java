@@ -65,7 +65,7 @@ public class TorrentView extends LinearLayout {
     }
 
     private void initViews() {
-        torrentName = findViewById(R.id.torrentName);
+        torrentName = findViewById(R.id.number);
         torrentSize = findViewById(R.id.torrentSize);
     }
 
